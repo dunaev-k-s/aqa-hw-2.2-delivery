@@ -57,7 +57,7 @@ public class DeliveryOrderPageTest {
         $("[data-test-id=name] [class='input__control']").setValue("Борис Ельцин");
         $("[data-test-id=phone] [class='input__control']").setValue("+79999999999");
         $(byText("Забронировать")).click();
-        $("[data-test-id=agreement]").shouldHave(cssClass("input_invalid"));
+        $("[data-test-id=agreement]").shouldHave(cssClass("inputinvalid"));
 
     }
 
