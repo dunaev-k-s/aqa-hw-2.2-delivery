@@ -3,17 +3,23 @@ package ru.netology;
 import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeliveryOrderPageTest {
     @BeforeEach
@@ -32,6 +38,13 @@ public class DeliveryOrderPageTest {
                 .shouldHave(exactText("Встреча успешно забронирована на " +
                         element("[data-test-id=date] input")
                                 .getAttribute("value")), Duration.ofSeconds(11));
+    }
+
+    @Test
+    void shouldDefaultTimeBeRight() {
+        assertEquals(LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                element("[data-test-id=date] input")
+                .getAttribute("value"));
     }
 
     @Test
