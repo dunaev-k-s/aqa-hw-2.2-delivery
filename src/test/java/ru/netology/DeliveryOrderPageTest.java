@@ -142,7 +142,7 @@ public class DeliveryOrderPageTest {
         $("[class=checkbox__box]").click();
         $(byText("Забронировать")).click();
         $("[data-test-id=notification] [class=notification__content]")
-                .shouldHave(exactText("Встреча успешно збронирована на " +
+                .shouldHave(exactText("Встреча успешно забронирована на " +
                         element("[data-test-id=date] input")
                                 .getAttribute("value")), Duration.ofSeconds(11));
 
