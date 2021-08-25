@@ -1,19 +1,12 @@
 package ru.netology;
 
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byClassName;
@@ -136,5 +129,22 @@ public class DeliveryOrderPageTest {
         $(byText("Забронировать")).click();
         $("[data-test-id=date]").$(byClassName("input__sub"))
                 .shouldHave(exactText("Заказ на выбранную дату невозможен"));
+    }
+
+    @Test
+    void shouldSendValidDataByUsingPopup(){
+        $("[data-test-id=city] [class='input__control']").setValue("Ек");
+        $(byClassName("menu")).$(byText("Екатеринбург")).click();
+        $("[data-test-id=date]").click();
+        $(byClassName("calendar")).sendKeys(Keys.RIGHT,Keys.RIGHT,Keys.RIGHT,Keys.RIGHT,Keys.ENTER);
+        $("[data-test-id=name] [class='input__control']").setValue("Борис Ельцин");
+        $("[data-test-id=phone] [class='input__control']").setValue("+79999999999");
+        $("[class=checkbox__box]").click();
+        $(byText("Забронировать")).click();
+        $("[data-test-id=notification] [class=notification__content]")
+                .shouldHave(exactText("Встреча успешно збронирована на " +
+                        element("[data-test-id=date] input")
+                                .getAttribute("value")), Duration.ofSeconds(11));
+
     }
 }
